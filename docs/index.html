@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunaCLI - Database Management Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #1877f2;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e4e6ea;
+        }
+
+        h2 {
+            color: #1c1e21;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #1877f2;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #365899;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .hero-item {
+            background: linear-gradient(135deg, #1877f2, #42a5f5);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .hero-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-left: 4px solid #1877f2;
+            padding: 1.5rem;
+            border-radius: 6px;
+        }
+
+        .feature-card h4 {
+            color: #1c1e21;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #65676b;
+            font-size: 0.95rem;
+        }
+
+        .code-block {
+            background: #1c1e21;
+            color: #e4e6ea;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'Terminal';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #1877f2;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .command-list {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .command-item {
+            display: flex;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #42a5f5;
+        }
+
+        .command-name {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            background: #1877f2;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 1rem;
+            font-size: 0.8rem;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .command-desc {
+            color: #65676b;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .installation-steps {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .step-number {
+            background: #1877f2;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .requirements-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .requirement-item {
+            background: #e7f3ff;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #1877f2;
+        }
+
+        .requirement-item strong {
+            color: #1877f2;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #1877f2, #365899);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1877f2;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #65676b;
+            font-size: 0.9rem;
+        }
+
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+            color: #65676b;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #1877f220, #42a5f520);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .command-item {
+                flex-direction: column;
+            }
+            
+            .command-name {
+                margin-bottom: 0.5rem;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌙 LunaCLI</h1>
+            <p>Command Line Interface for PostgreSQL Database Management</p>
+        </header>
+
+        <section class="section">
+            <h2>Overview</h2>
+            <p>LunaCLI is a powerful command-line tool designed to interact with <span class="highlight">PostgreSQL databases</span>. It allows users to connect, execute SQL commands, and configure connection settings dynamically, all from a single, intuitive interface.</p>
+            
+            <div class="hero-grid">
+                <div class="hero-item">
+                    <h4>🚀 Easy Setup</h4>
+                    <p>Quick installation and configuration</p>
+                </div>
+                <div class="hero-item">
+                    <h4>⚡ Dynamic Connection</h4>
+                    <p>Real-time credential management</p>
+                </div>
+                <div class="hero-item">
+                    <h4>📊 Advanced Features</h4>
+                    <p>Export, scheduling, and monitoring</p>
+                </div>
+                <div class="hero-item">
+                    <h4>🔄 Transaction Support</h4>
+                    <p>Full ACID transaction management</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>Database Connectivity</h4>
+                    <p>Connect to PostgreSQL databases with custom credentials and dynamic port configuration</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SQL Execution</h4>
+                    <p>Execute SQL commands directly from the CLI with table-formatted results</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Transaction Management</h4>
+                    <p>Full support for database transactions, table management, and schema creation</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Entity Management</h4>
+                    <p>Create, save, and clone database entities for quick terminal connections</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Command History</h4>
+                    <p>Track and reuse previously executed commands for improved workflow</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Query Scheduling</h4>
+                    <p>Schedule SQL queries to run at specified intervals automatically</p>
+                </div>
+                <div class="feature-card">
+                    <h4>File Operations</h4>
+                    <p>Execute SQL files and export table data to CSV format</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Batch Operations</h4>
+                    <p>Multiple query execution with sequential result retrieval</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Code Snippets</h4>
+                    <p>Save frequently used SQL commands for quick access and reuse</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Monitoring</h4>
+                    <p>Prometheus support for query monitoring and performance tracking</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📋 Prerequisites</h2>
+            <p>Before running LunaCLI, ensure you have the following installed:</p>
+            
+            <div class="requirements-list">
+                <div class="requirement-item">
+                    <strong>Java 17+</strong>
+                    <p>Required runtime environment</p>
+                </div>
+                <div class="requirement-item">
+                    <strong>Maven</strong>
+                    <p>For building the project</p>
+                </div>
+                <div class="requirement-item">
+                    <strong>PostgreSQL</strong>
+                    <p>Database connectivity</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🛠️ Installation</h2>
+            <div class="installation-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Clone the repository:</strong>
+                        <div class="code-block">git clone https://github.com/doguhannilt/LunaCLI.git</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Navigate to project directory:</strong>
+                        <div class="code-block">cd LunaCLI</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Build the project:</strong>
+                        <div class="code-block">mvn clean package</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Run LunaCLI:</strong>
+                        <div class="code-block">java -jar LunaCLI.jar</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🚀 Usage Examples</h2>
+            
+            <h3>Database Connection</h3>
+            <div class="code-block">luna connect postgresql username:postgres password:postgres database:managify</div>
+            
+            <h3>Port Configuration</h3>
+            <div class="code-block">luna port:5433</div>
+            
+            <h3>SQL Query Execution</h3>
+            <div class="code-block">luna select-from users</div>
+            
+            <h3>Connection Information</h3>
+            <div class="code-block">luna info</div>
+            
+            <h3>Query Scheduling</h3>
+            <div class="code-block">luna schedule command:"SELECT * FROM logs"</div>
+        </section>
+
+        <section class="section">
+            <h2>📖 Available Commands</h2>
+            <div class="command-list">
+                <div class="command-item">
+                    <div class="command-name">begin-transaction</div>
+                    <div class="command-desc">Start a new database transaction</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">commit</div>
+                    <div class="command-desc">Commit the current transaction</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">rollback</div>
+                    <div class="command-desc">Rollback the current transaction</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">create-table</div>
+                    <div class="command-desc">Create a new table with specified columns</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">drop-table</div>
+                    <div class="command-desc">Drop an existing table</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">create-schema</div>
+                    <div class="command-desc">Create a new database schema</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">insert-into</div>
+                    <div class="command-desc">Insert data into a specified table</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">select-from</div>
+                    <div class="command-desc">Select data from a table with optional conditions</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">update</div>
+                    <div class="command-desc">Update data in a table with conditions</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">delete-from</div>
+                    <div class="command-desc">Delete data from a table with conditions</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">backup-database</div>
+                    <div class="command-desc">Create a backup of the database</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">restore-database</div>
+                    <div class="command-desc">Restore database from backup file</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">history</div>
+                    <div class="command-desc">Display all previously executed commands</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">schedule</div>
+                    <div class="command-desc">Schedule a query to run at specified intervals</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">export</div>
+                    <div class="command-desc">Export query results to CSV file</div>
+                </div>
+                <div class="command-item">
+                    <div class="command-name">execute</div>
+                    <div class="command-desc">Execute SQL commands from a file</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🔧 Development</h2>
+            <p>For development purposes, you can run the project without packaging:</p>
+            <div class="code-block">mvn exec:java -Dexec.mainClass="org.cli.Main"</div>
+            
+            <h3>Contributing</h3>
+            <ul>
+                <li>Submit pull requests for new features or bug fixes</li>
+                <li>Report issues through the GitHub issue tracker</li>
+                <li>Follow the existing code style and conventions</li>
+                <li>Include tests for new functionality</li>
+            </ul>
+        </section>
+
+        <section class="cta-section">
+            <h2>🚀 Get Started with LunaCLI</h2>
+            <p>Experience powerful PostgreSQL database management directly from your command line</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/doguhannilt/LunaCLI" class="btn btn-primary" target="_blank">View on GitHub</a>
+                <a href="https://github.com/doguhannilt/LunaCLI/releases" class="btn btn-secondary" target="_blank">Download Latest</a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2025 LunaCLI. Licensed under MIT License. Built with Java and Maven.</p>
+        </footer>
+    </div>
+</body>
+</html>
